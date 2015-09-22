@@ -1,3 +1,14 @@
+class AlaudaException(Exception):
+
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return '[alauda cli exception] {0}'.format(self.message)
+
+    __repr__ = __str__
+
+
 class AlaudaServerError(Exception):
 
     def __init__(self, status_code, message):

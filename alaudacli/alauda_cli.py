@@ -9,16 +9,18 @@ from exceptions import AlaudaInputError, AlaudaServerError
 def patch_argv(argv):
     args = copy.copy(argv)
 
-    if not args:
+    if not args:  # impossible, the command is args[0]
         raise AlaudaInputError('Arguments cannot be empty')
 
     if len(args) >= 2:
+        # for example, `alauda create` -> `alauda service create`
         if args[1] in ['create', 'run', 'scale', 'inspect', 'start', 'stop', 'rm',
                        'enable-autoscaling', 'disable-autoscaling', 'logs', 'ps',
-                       'instances', 'instance', 'instance-logs']:
+                       'instances', 'instance', 'instance-logs', 'ssh-path', 'exec']:
             args.insert(1, 'service')
 
     if len(args) == 1:
+        # `alauda` -> `alauda -h`
         args.append('-h')
     elif len(args) == 2 and args[1] in ['service', 'compose', 'backup', 'organization']:
         args.append('-h')
@@ -34,6 +36,7 @@ def patch_argv(argv):
         elif args[1] == 'organization' and args[2] in ['create', 'inspect', 'update']:
             args.append('-h')
 
+    # command name is removed
     return args[1:]
 
 

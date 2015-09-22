@@ -4,7 +4,6 @@ import os
 import settings
 from exceptions import AlaudaInputError
 
-
 def get_api_endpoint(cloud):
     return settings.API_ENDPOINTS[cloud]
 

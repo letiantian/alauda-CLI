@@ -8,7 +8,7 @@ import compose
 from service import Service
 from backup import Backup
 from organization import Organization
-
+from execute import execute
 
 def login(username, password, cloud, endpoint):
     if not username:
@@ -19,6 +19,7 @@ def login(username, password, cloud, endpoint):
     api_endpoint = endpoint
     if api_endpoint is None:
         api_endpoint = auth.get_api_endpoint(cloud)
+
     url = api_endpoint + 'generate-api-token/'
     payload = {'username': username, 'password': password}
     r = requests.post(url, payload)
@@ -114,6 +115,10 @@ def service_logs(name, namespace, start_time, end_time):
     service = Service.fetch(name, namespace)
     result = service.logs(start_time, end_time)
     util.print_logs(result)
+
+## add by letian
+def service_exec(ssh_client, namespace, is_verbose, container, command):
+    execute(ssh_client, namespace, is_verbose, container, command)
 
 
 def instance_ps(name, namespace):

@@ -129,6 +129,13 @@ def _add_service_parser(subparsers):
     logs_instance_parser.add_argument('-e', '--end-time', help='Logs query end time. e.g. 2015-05-01 12:12:12')
     logs_instance_parser.add_argument('-n', '--namespace', help='Service namespace')
 
+    exec_parser = service_subparsers.add_parser('exec', help='Alauda exec', description='Alauda exec')
+    exec_parser.add_argument('-c', '--client', help='The command name of ssh client, support ssh and plink, in the form of <ssh_client>:<client_path>, where <client_path> defaults to the same as ssh_client if absent. The default is ssh', default='ssh')
+    exec_parser.add_argument('-n', '--namespace', help='Service namespace')
+    exec_parser.add_argument('-v', '--verbose', action='store_true', help='show more info')
+    exec_parser.add_argument('container', help='Container instance name, in the form of <service name>.<container number>, where <container number> defaults to 0 if absent')
+    exec_parser.add_argument('command', metavar='command', type=str, nargs='+', help='Command to execute')
+
 
 def _add_backups_parser(subparsers):
     backups_parser = subparsers.add_parser('backup', help='Backup operations', description='Backup operations')

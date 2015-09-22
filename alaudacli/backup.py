@@ -4,7 +4,6 @@ import json
 import requests
 from exceptions import AlaudaServerError
 
-
 class Backup(object):
 
     def __init__(self, service=None, name='', mounted_dir='', details=''):
